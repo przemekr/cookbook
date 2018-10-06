@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div align="center">
+	<h1>{{ recipe.title }}</h1>
+</div> 
+
+<!-- Images used to open the lightbox -->
+<div class="row">
+{% for i, pic_small, pic in gallery %}
+  <div class="column">
+      <img src={{pic_small}} onclick="openModal(); currentSlide({{i}})" class="hover-shadow", style="width:80%">
+  </div>
+{% endfor %}
+</div>
+
+<!-- The Modal/Lightbox -->
+<div id="myModal" class="modal">
+   <span class="close cursor" onclick="closeModal()">&times;</span>
+   <div class="modal-content">
+
+{% for i, pic_small, pic in gallery %}
+    <div class="mySlides">
+	<div class="numbertext">{{i}}/{{gallery_size}}</div>
+	<img src={{pic}} style="width:100%">
+    </div>
+{% endfor %}
+
+    <!-- Next/previous controls -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    <!-- Caption text -->
+    <div class="caption-container">
+      <p id="caption"></p>
+    </div>
+
+    <!-- Thumbnail image controls -->
+{% for i, pic_small, pic in gallery %}
+    <div class="column">
+	<img class="demo" src={{pic_small}} onclick="currentSlide({{i}})" style="width:250">
+    </div>
+{% endfor %}
+  </div>
+</div>
+
+<p>
+{{recipe.descr}}
+
+<h2> Składniki </h2>
+{{recipe.ingredient}}
+
+<h2> Przygotowanie </h2>
+{{recipe.steps}}
+
+<h3> tagi:
+{% for tag in tags %}
+{{tag.name}} 
+{% endfor %}
+ </h3>
+
+<script>
+// Open the Modal
+function openModal() {
+  document.getElementById('myModal').style.display = "block";
+}
+
+// Close the Modal
+function closeModal() {
+  document.getElementById('myModal').style.display = "none";
+}
+
+var slideIndex = 0;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n >= slides.length) {slideIndex = 0}
+  if (n < 0) {slideIndex = slides.length-1}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex].style.display = "block";
+  dots[slideIndex].className += " active";
+  captionText.innerHTML = dots[slideIndex].alt;
+}
+</script>
+
+{% endblock %}

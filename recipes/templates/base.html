@@ -1,0 +1,81 @@
+{% load static %}
+<html>
+  <head>
+    <title>My Cookbook</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <link href='http://fonts.googleapis.com/css?family=Cookie&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amarante&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+  </head>
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">My Cookbook</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/recipes">Home</a></li>
+            <li><a href="/recipes/about">About</a></li>
+            <li><a href="/recipes/contact">Contact</a></li>
+            <li class="dropdown">
+              <a
+                href="#"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false">
+                Tags
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                {% for tag in tags %}
+                <li><a
+                  href="/recipes/?t={{tag.name}}"
+                  class="btn btn-default">{{tag.name}}
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            <li>
+              <form id="searchform" action="{% url 'index' %}" method="get" accept-charset="utf-8">
+                <button class="searchbutton" type="submit">
+                  <i class="fa fa-search">search</i>
+                </button>
+                <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+              </form>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <!-- Begin page content -->
+    <div class="container">
+      <div id="wrapper" class="hfeed">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Recipes for happy life...</p>
+      </div>
+    </footer>
+
+  </body>
+</html>

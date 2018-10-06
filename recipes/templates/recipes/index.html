@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if recipes %}
+<ul class="media-list">
+  {% for img, recipe in recipes %}
+  <li class="media">
+      <div class="media-left">
+	  <img class="media-object" src={{img}} alt="img">
+      </div>
+      <div class="media-body">
+	<a href="/recipes/{{ recipe.id }}/">
+	  <h4 class="media-heading">{{recipe.title}}</h4>
+	</a>
+        <p>{{recipe.descr}}</p>
+      </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No recipes found.</p>
+{% endif %}
+{% endblock %}
